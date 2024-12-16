@@ -1,0 +1,15 @@
+[package]
+name = "suitcase_nft"
+version = "1.0.0"
+authors = []
+
+[addresses]
+suitcase_nft_addr='0xeb01485019ba79d69466a6a685cc22dfb454092ac0ce47014af3556f6aa07c93'
+
+[dev-addresses]
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-framework", rev = "mainnet" }
+AptosTokenObjects = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-token-objects", rev = "mainnet" }
+
+[dev-dependencies]
