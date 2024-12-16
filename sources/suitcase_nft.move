@@ -15,9 +15,9 @@ module suitcase_nft_addr::suitcase_nft {
     use aptos_framework::event;
     use std::option::{Self, Option};
     use aptos_token_objects::collection;
-    use std::string::{Self, String, utf8};
+    use std::string::{String, utf8};
     use aptos_token_objects::token::{Self, MutatorRef, BurnRef};
-    use aptos_framework::object::{Self, ConstructorRef, Object, ObjectCore};
+    use aptos_framework::object::{Self, Object, ObjectCore};
     use aptos_token_objects::property_map::{Self, MutatorRef as PropertyMutatorRef};
     use aptos_token_objects::royalty::{Self, MutatorRef as RoyaltyMutatorRef, Royalty};
 
@@ -244,7 +244,9 @@ module suitcase_nft_addr::suitcase_nft {
 
     #[test_only]
     use std::account;
+    #[test_only]
     use aptos_token_objects::token::{Token};
+    #[test_only]
     use aptos_token_objects::collection::{Collection};
 
     #[test_only]
@@ -468,7 +470,7 @@ module suitcase_nft_addr::suitcase_nft {
 
         assert!(royalty_numerator_after == 10, 28);
         assert!(royalty_denominator_after == 200, 29);
-        assert!(royalty_payee_address == signer::address_of(creator), 30);
+        assert!(royalty_payee_address_after == signer::address_of(creator), 30);
     }
 
     #[test(creator=@suitcase_nft_addr)]
@@ -477,8 +479,6 @@ module suitcase_nft_addr::suitcase_nft {
         let aaron = account::create_signer_for_test(@0x1);
 
         init_module(creator);
-
-        let royalty = royalty::get<Collection>(object::address_to_object(collection_address()));
 
         change_collection_royalty(&aaron, 10, 200);
     }
@@ -520,7 +520,6 @@ module suitcase_nft_addr::suitcase_nft {
     #[test(creator=@suitcase_nft_addr)]
     #[expected_failure(abort_code = E_NOT_TOKEN_OWNER)]
     fun test_change_token_royalty_not_owner(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
@@ -534,7 +533,6 @@ module suitcase_nft_addr::suitcase_nft {
 
     #[test(creator=@suitcase_nft_addr)]
     fun test_change_token_uri(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
@@ -557,7 +555,6 @@ module suitcase_nft_addr::suitcase_nft {
     #[test(creator=@suitcase_nft_addr)]
     #[expected_failure(abort_code = E_NOT_TOKEN_OWNER)]
     fun test_change_token_uri_not_owner(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
@@ -571,7 +568,6 @@ module suitcase_nft_addr::suitcase_nft {
 
     #[test(creator=@suitcase_nft_addr)]
     fun test_add_attribute(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
@@ -600,7 +596,6 @@ module suitcase_nft_addr::suitcase_nft {
     #[test(creator=@suitcase_nft_addr)]
     #[expected_failure(abort_code = E_NOT_TOKEN_OWNER)]
     fun test_add_attribute_not_owner(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
@@ -614,7 +609,6 @@ module suitcase_nft_addr::suitcase_nft {
 
     #[test(creator=@suitcase_nft_addr)]
     fun test_remove_attribute(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
@@ -642,7 +636,6 @@ module suitcase_nft_addr::suitcase_nft {
     #[test(creator=@suitcase_nft_addr)]
     #[expected_failure(abort_code = E_NOT_TOKEN_OWNER)]
     fun test_remove_attribute_not_owner(creator: &signer) acquires TokenRefs {
-        let creator_address = signer::address_of(creator);
         let aaron = account::create_signer_for_test(@0x1);
         let aaron_address = signer::address_of(&aaron);
 
